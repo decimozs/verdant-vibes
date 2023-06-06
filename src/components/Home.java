@@ -1,33 +1,25 @@
 package components;
 
 import java.awt.Dimension;
-import constants.Constants;
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
 import javax.swing.SwingConstants;
-import javax.swing.JTabbedPane;
 import java.awt.Font;
 import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.nio.file.Paths;
 import javax.swing.JTextField;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import constants.Plant;
 import hooks.Hooks;
-import components.PlantDescriptionCard;
-import components.Cart;
-import java.awt.FlowLayout;
-import java.awt.Rectangle;
+import constants.Hydrangea;
+import constants.Constants;
 
 public class Home extends JFrame {
-
 	private JPanel contentPane;
 	private JLabel hamburgerMenu;
 	private JLabel background;
@@ -109,42 +101,21 @@ public class Home extends JFrame {
 
 	public PlantDescriptionCard pdc = new PlantDescriptionCard(this);
 	public Cart shoppingCart = new Cart(this);
-	
+	public Hydrangea hyd;
 	public JPanel cartPane;
 	public JLabel cartNumberSetter;
-	
+	private Constants plant = new Constants();
 	// Base path
     private static final String BASEPATH = "/resources/";
 
     // ItemImage path
     private static final String ITEM_IMAGE = "ItemImage/";
 
-
     // DescriptionImage path
     private static final String DESCRIPTION_IMAGE = "DescriptionImage/";
 	
 	public Home() {
 		Hooks customHooks = new Hooks();
-		
-		// hydrangea
-		Plant hydrangea = new Plant(
-	    		"Hydrangea",
-	    	    "Shrubs",
-	    	    "Hydrangeaceae",
-	    	    "₱ 900.00",
-	    	    BASEPATH + "hydrangeaItemImage.png",
-	    	    BASEPATH + DESCRIPTION_IMAGE + "hydrangeaDescription.png"   
-	    );
-		
-		// forsythia
-		Plant forsythia = new Plant(
-	    		"Forsythia",
-	    	    "Shrubs",
-	    	    "Olives",
-	    	    "₱ 900.00",
-	    	    BASEPATH + ITEM_IMAGE + "forsythiaItemImage.png",
-	    	    BASEPATH + DESCRIPTION_IMAGE + "forsythiaDescription.png"
-	    );
 		
 		// sage
 		Plant sage = new Plant(
@@ -380,12 +351,12 @@ public class Home extends JFrame {
 				        cartPane.setVisible(false);
 				        customHooks.setPlantItemCardProperties(
 				        		pdc, 
-				        		englishivy.getName(), 
-				        		englishivy.getDescription(), 
-				        		englishivy.getCategory(), 
-				        		englishivy.getFamily(), 
-				        		englishivy.getPrice(), 
-				        		englishivy.getImage()
+				        		plant.createEnglishIvy().getName(),
+								plant.createEnglishIvy().getDescription(),
+								plant.createEnglishIvy().getCategory(),
+								plant.createEnglishIvy().getFamily(),
+								plant.createEnglishIvy().getPrice(),
+								plant.createEnglishIvy().getImage()
 				        		);
 			        }else {
 			        	plantDescriptionPane.setVisible(false);
@@ -418,12 +389,12 @@ public class Home extends JFrame {
 				        cartPane.setVisible(false);
 				        customHooks.setPlantItemCardProperties(
 				        		pdc, 
-				        		devilsivy.getName(), 
-				        		devilsivy.getDescription(), 
-				        		devilsivy.getCategory(), 
-				        		devilsivy.getFamily(), 
-				        		devilsivy.getPrice(), 
-				        		devilsivy.getImage()
+				        		plant.createDevilsIvy().getName(),
+								plant.createDevilsIvy().getDescription(),
+								plant.createDevilsIvy().getCategory(),
+								plant.createDevilsIvy().getFamily(),
+								plant.createDevilsIvy().getPrice(),
+								plant.createDevilsIvy().getImage()
 				        		);
 			        }else {
 			        	plantDescriptionPane.setVisible(false);
@@ -486,12 +457,12 @@ public class Home extends JFrame {
 				        cartPane.setVisible(false);
 				        customHooks.setPlantItemCardProperties(
 				        		pdc, 
-				        		sage.getName(), 
-				        		sage.getDescription(), 
-				        		sage.getCategory(), 
-				        		sage.getFamily(), 
-				        		sage.getPrice(), 
-				        		sage.getImage()
+				        		plant.createSage().getName(),
+								plant.createSage().getDescription(),
+								plant.createSage().getCategory(),
+								plant.createSage().getFamily(),
+								plant.createSage().getPrice(),
+								plant.createSage().getImage()
 				        		);
 			        }else {
 			        	plantDescriptionPane.setVisible(false);
@@ -523,12 +494,12 @@ public class Home extends JFrame {
 				        cartPane.setVisible(false);
 				        customHooks.setPlantItemCardProperties(
 				        		pdc, 
-				        		rosemary.getName(), 
-				        		rosemary.getDescription(), 
-				        		rosemary.getCategory(), 
-				        		rosemary.getFamily(), 
-				        		rosemary.getPrice(), 
-				        		rosemary.getImage()
+				        		plant.createRosemary().getName(),
+								plant.createRosemary().getDescription(),
+								plant.createRosemary().getCategory(),
+								plant.createRosemary().getFamily(),
+								plant.createRosemary().getPrice(),
+								plant.createRosemary().getImage()
 				        		);
 			        }else {
 			        	plantDescriptionPane.setVisible(false);
@@ -590,12 +561,12 @@ public class Home extends JFrame {
 				        cartPane.setVisible(false);
 				        customHooks.setPlantItemCardProperties(
 				        		pdc, 
-				        		wisteria.getName(), 
-				        		wisteria.getDescription(), 
-				        		wisteria.getCategory(), 
-				        		wisteria.getFamily(), 
-				        		wisteria.getPrice(), 
-				        		wisteria.getImage()
+				        		plant.createWisteria().getName(),
+								plant.createWisteria().getDescription(),
+								plant.createWisteria().getCategory(),
+								plant.createWisteria().getFamily(),
+								plant.createWisteria().getPrice(),
+								plant.createWisteria().getImage()
 				        		);
 			        }else {
 			        	plantDescriptionPane.setVisible(false);
@@ -627,12 +598,12 @@ public class Home extends JFrame {
 				        cartPane.setVisible(false);
 				        customHooks.setPlantItemCardProperties(
 				        		pdc, 
-				        		starjasmine.getName(), 
-				        		starjasmine.getDescription(), 
-				        		starjasmine.getCategory(), 
-				        		starjasmine.getFamily(), 
-				        		starjasmine.getPrice(), 
-				        		starjasmine.getImage()
+				        		plant.createStarJasmine().getName(),
+								plant.createStarJasmine().getDescription(),
+								plant.createStarJasmine().getCategory(),
+								plant.createStarJasmine().getFamily(),
+								plant.createStarJasmine().getPrice(),
+								plant.createStarJasmine().getImage()
 				        		);
 			        }else {
 			        	plantDescriptionPane.setVisible(false);
@@ -694,12 +665,12 @@ public class Home extends JFrame {
 				        cartPane.setVisible(false);
 				        customHooks.setPlantItemCardProperties(
 				        		pdc, 
-				        		pine.getName(), 
-				        		pine.getDescription(), 
-				        		pine.getCategory(), 
-				        		pine.getFamily(), 
-				        		pine.getPrice(), 
-				        		pine.getImage()
+				        		plant.createPine().getName(),
+								plant.createPine().getDescription(),
+								plant.createPine().getCategory(),
+								plant.createPine().getFamily(),
+								plant.createPine().getPrice(),
+								plant.createPine().getImage()
 				        		);
 			        }else {
 			        	plantDescriptionPane.setVisible(false);
@@ -731,12 +702,12 @@ public class Home extends JFrame {
 				        cartPane.setVisible(false);
 				        customHooks.setPlantItemCardProperties(
 				        		pdc, 
-				        		conifers.getName(), 
-				        		conifers.getDescription(), 
-				        		conifers.getCategory(), 
-				        		conifers.getFamily(), 
-				        		conifers.getPrice(), 
-				        		conifers.getImage()
+				        		plant.createConifers().getName(),
+								plant.createConifers().getDescription(),
+								plant.createConifers().getCategory(),
+								plant.createConifers().getFamily(),
+								plant.createConifers().getPrice(),
+								plant.createConifers().getImage()
 				        		);
 			        }else {
 			        	plantDescriptionPane.setVisible(false);
@@ -799,12 +770,12 @@ public class Home extends JFrame {
 				        cartPane.setVisible(false);
 				        customHooks.setPlantItemCardProperties(
 				        		pdc, 
-				        		forsythia.getName(), 
-				        		forsythia.getDescription(), 
-				        		forsythia.getCategory(), 
-				        		forsythia.getFamily(), 
-				        		forsythia.getPrice(), 
-				        		forsythia.getImage()
+				        		plant.createForsythia().getName(),
+								plant.createForsythia().getDescription(),
+								plant.createForsythia().getCategory(),
+								plant.createForsythia().getFamily(),
+								plant.createForsythia().getPrice(),
+								plant.createForsythia().getImage()
 				        		);
 			        }else {
 			        	plantDescriptionPane.setVisible(false);
@@ -836,12 +807,12 @@ public class Home extends JFrame {
 				        cartPane.setVisible(false);
 				        customHooks.setPlantItemCardProperties(
 				        		pdc, 
-				        		hydrangea.getName(), 
-				        		hydrangea.getDescription(), 
-				        		hydrangea.getCategory(), 
-				        		hydrangea.getFamily(), 
-				        		hydrangea.getPrice(), 
-				        		hydrangea.getImage()
+				        		plant.createHydrangea().getName(),
+								plant.createHydrangea().getDescription(),
+								plant.createHydrangea().getCategory(),
+								plant.createHydrangea().getFamily(),
+								plant.createHydrangea().getPrice(),
+								plant.createHydrangea().getImage()
 				        		);
 			        }else {
 			        	plantDescriptionPane.setVisible(false);
@@ -898,12 +869,12 @@ public class Home extends JFrame {
 				        cartPane.setVisible(false);
 				        customHooks.setPlantItemCardProperties(
 				        		pdc, 
-				        		pine.getName(), 
-				        		pine.getDescription(), 
-				        		pine.getCategory(), 
-				        		pine.getFamily(), 
-				        		pine.getPrice(), 
-				        		pine.getImage()
+				        		plant.createPine().getName(),
+								plant.createPine().getDescription(),
+								plant.createPine().getCategory(),
+								plant.createPine().getFamily(),
+								plant.createPine().getPrice(),
+								plant.createPine().getImage()
 				        		);
 			        }else {
 			        	plantDescriptionPane.setVisible(false);
@@ -935,12 +906,12 @@ public class Home extends JFrame {
 				        cartPane.setVisible(false);
 				        customHooks.setPlantItemCardProperties(
 				        		pdc, 
-				        		rosemary.getName(), 
-				        		rosemary.getDescription(), 
-				        		rosemary.getCategory(), 
-				        		rosemary.getFamily(), 
-				        		rosemary.getPrice(), 
-				        		rosemary.getImage()
+				        		plant.createRosemary().getName(),
+								plant.createRosemary().getDescription(),
+								plant.createRosemary().getCategory(),
+								plant.createRosemary().getFamily(),
+								plant.createRosemary().getPrice(),
+								plant.createRosemary().getImage()
 				        		);
 			        }else {
 			        	plantDescriptionPane.setVisible(false);
@@ -971,12 +942,12 @@ public class Home extends JFrame {
 						        cartPane.setVisible(false);
 						        customHooks.setPlantItemCardProperties(
 						        		pdc, 
-						        		sage.getName(), 
-						        		sage.getDescription(), 
-						        		sage.getCategory(), 
-						        		sage.getFamily(), 
-						        		sage.getPrice(), 
-						        		sage.getImage()
+						        		plant.createSage().getName(),
+										plant.createSage().getDescription(),
+										plant.createSage().getCategory(),
+										plant.createSage().getFamily(),
+										plant.createSage().getPrice(),
+										plant.createSage().getImage()
 						        		);
 					        }else {
 					        	plantDescriptionPane.setVisible(false);
@@ -1007,12 +978,12 @@ public class Home extends JFrame {
 						        cartPane.setVisible(false);
 						        customHooks.setPlantItemCardProperties(
 						        		pdc, 
-						        		hydrangea.getName(), 
-						        		hydrangea.getDescription(), 
-						        		hydrangea.getCategory(), 
-						        		hydrangea.getFamily(), 
-						        		hydrangea.getPrice(), 
-						        		hydrangea.getImage()
+						        		plant.createHydrangea().getName(),
+										plant.createHydrangea().getDescription(),
+										plant.createHydrangea().getCategory(),
+										plant.createHydrangea().getFamily(),
+										plant.createHydrangea().getPrice(),
+										plant.createHydrangea().getImage()
 						        		);
 					        }else {
 					        	plantDescriptionPane.setVisible(false);
@@ -1044,12 +1015,12 @@ public class Home extends JFrame {
 						        cartPane.setVisible(false);
 						        customHooks.setPlantItemCardProperties(
 						        		pdc, 
-						        		devilsivy.getName(), 
-						        		devilsivy.getDescription(), 
-						        		devilsivy.getCategory(), 
-						        		devilsivy.getFamily(), 
-						        		devilsivy.getPrice(), 
-						        		devilsivy.getImage()
+						        		plant.createDevilsIvy().getName(),
+										plant.createDevilsIvy().getDescription(),
+										plant.createDevilsIvy().getCategory(),
+										plant.createDevilsIvy().getFamily(),
+										plant.createDevilsIvy().getPrice(),
+										plant.createDevilsIvy().getImage()
 						        		);
 					        }else {
 					        	plantDescriptionPane.setVisible(false);
@@ -1132,12 +1103,12 @@ public class Home extends JFrame {
 				        cartPane.setVisible(false);
 				        customHooks.setPlantItemCardProperties(
 				        		pdc, 
-				        		pine.getName(), 
-				        		pine.getDescription(), 
-				        		pine.getCategory(), 
-				        		pine.getFamily(), 
-				        		pine.getPrice(), 
-				        		pine.getImage()
+				        		plant.createPine().getName(),
+								plant.createPine().getDescription(),
+								plant.createPine().getCategory(),
+								plant.createPine().getFamily(),
+								plant.createPine().getPrice(),
+								plant.createPine().getImage()
 				        		);
 			        }else {
 			        	plantDescriptionPane.setVisible(false);
@@ -1169,12 +1140,12 @@ public class Home extends JFrame {
 				        cartPane.setVisible(false);
 				        customHooks.setPlantItemCardProperties(
 				        		pdc, 
-				        		hydrangea.getName(), 
-				        		hydrangea.getDescription(), 
-				        		hydrangea.getCategory(), 
-				        		hydrangea.getFamily(), 
-				        		hydrangea.getPrice(), 
-				        		hydrangea.getImage()
+				        		plant.createHydrangea().getName(),
+								plant.createHydrangea().getDescription(),
+								plant.createHydrangea().getCategory(),
+								plant.createHydrangea().getFamily(),
+								plant.createHydrangea().getPrice(),
+								plant.createHydrangea().getImage()
 				        		);
 			        }else {
 			        	plantDescriptionPane.setVisible(false);
@@ -1206,12 +1177,12 @@ public class Home extends JFrame {
 				        cartPane.setVisible(false);
 				        customHooks.setPlantItemCardProperties(
 				        		pdc, 
-				        		sage.getName(), 
-				        		sage.getDescription(), 
-				        		sage.getCategory(), 
-				        		sage.getFamily(), 
-				        		sage.getPrice(), 
-				        		sage.getImage()
+				        		plant.createSage().getName(),
+								plant.createSage().getDescription(),
+								plant.createSage().getCategory(),
+								plant.createSage().getFamily(),
+								plant.createSage().getPrice(),
+								plant.createSage().getImage()
 				        		);
 			        }else {
 			        	plantDescriptionPane.setVisible(false);
@@ -1243,12 +1214,12 @@ public class Home extends JFrame {
 				        cartPane.setVisible(false);
 				        customHooks.setPlantItemCardProperties(
 				        		pdc, 
-				        		forsythia.getName(), 
-				        		forsythia.getDescription(), 
-				        		forsythia.getCategory(), 
-				        		forsythia.getFamily(), 
-				        		forsythia.getPrice(), 
-				        		forsythia.getImage()
+				        		plant.createForsythia().getName(),
+								plant.createForsythia().getDescription(),
+								plant.createForsythia().getCategory(),
+								plant.createForsythia().getFamily(),
+								plant.createForsythia().getPrice(),
+								plant.createForsythia().getImage()
 				        		);
 			        }else {
 			        	plantDescriptionPane.setVisible(false);
