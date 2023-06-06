@@ -1,7 +1,5 @@
 package constants;
 
-import java.nio.file.Paths;
-
 public class Plant {
 	private String name;
 	private String category;
@@ -66,7 +64,4 @@ public class Plant {
     public void setDescription(String description) {
         this.description = description;
     }
-
-    
-    
 }
