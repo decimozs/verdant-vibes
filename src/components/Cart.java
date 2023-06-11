@@ -1,33 +1,29 @@
 package components;
 
 import javax.swing.JPanel;
-import constants.Plant;
-import java.awt.event.ActionListener;
-import components.PlantDescriptionCard;
-import javax.swing.SwingConstants;
+import javax.swing.JScrollBar;
 
+import java.util.List;
+import java.util.ArrayList;
+import java.awt.event.ActionListener;
+import javax.swing.SwingConstants;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-
 import java.awt.Font;
-import java.awt.Image;
 import java.awt.Rectangle;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.net.URL;
-import java.util.Arrays;
-
-import javax.swing.BoxLayout;
+import java.awt.event.MouseWheelEvent;
+import java.awt.event.MouseWheelListener;
 import java.awt.Component;
-import backend.Table;
-import components.PlantDescriptionCard;
+import javax.swing.JScrollPane;
+import javax.swing.ScrollPaneConstants;
+import java.awt.Point;
 
 public class Cart extends JPanel {
 	
@@ -35,25 +31,22 @@ public class Cart extends JPanel {
 	private JLabel bg;
 	public JLabel cartNamePane;
 	private Home home;
-	private JLabel quantity;
-	private JLabel cancel;
-	private JLabel plantIcon;
 	public int numRows = 0;
-	public Table table = new Table();
-	private JLabel lblNewLabel_1;
-	private JLabel plantQuantity;
-	private JLabel plantPrice;
-	private JLabel plantImage;
 	public JPanel mainPanel;
 	public JButton addRowButton;
-	private JButton removeButton;
+	public JButton removeButton;
 	private int rowGap = 10;
-	private PlantDescriptionCard pdc;
-	
+    public List<JPanel> cartPanes = new ArrayList<>();
+    private JLabel notice;
+    private JScrollPane scrollPane;
+    private JLabel plantNameLabel;
+    private JLabel plantQuantity;
+    private JLabel plantPrice;
+    private JLabel plantImage;
+
 	public Cart(Home home) {
 		this.home = home;
 		
-		new JPanel();
 		setBounds(new Rectangle(0, 0, 517, 759));
 		setPreferredSize(new Dimension(517, 759));
 		setMinimumSize(new Dimension(517, 759));
@@ -62,12 +55,50 @@ public class Cart extends JPanel {
 		setBackground(new Color(0, 0, 0, 0));
         setOpaque(false);
 		
+		notice = new JLabel("");
+		notice.setVisible(false);
+		
 		mainPanel = new JPanel();
 		mainPanel.setOpaque(false);
 		mainPanel.setBackground(Color.BLACK);
 		mainPanel.setBounds(60, 119, 397, 544);
 		mainPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 0, rowGap));
-		add(mainPanel);
+		
+		scrollPane = new JScrollPane(mainPanel);
+		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
+		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+	    scrollPane.getViewport().setOpaque(false);
+	    
+	    scrollPane.addMouseWheelListener(new MouseWheelListener() {
+            @Override
+            public void mouseWheelMoved(MouseWheelEvent e) {
+                Point viewPosition = scrollPane.getViewport().getViewPosition();
+                viewPosition.y += e.getUnitsToScroll() * e.getScrollAmount();
+
+                int minY = 0;
+                if (viewPosition.y < minY) {
+                    viewPosition.y = minY;
+                }
+                
+                scrollPane.getViewport().setViewPosition(viewPosition);
+            }
+        });
+
+	        scrollPane.setOpaque(false);
+	        scrollPane.getViewport().setOpaque(false);
+	        scrollPane.setBounds(60, 119, 397, 544);
+	        scrollPane.setBorder(null);
+	        JScrollBar verticalScrollBar = scrollPane.getVerticalScrollBar();
+	        verticalScrollBar.setOpaque(false);
+	        verticalScrollBar.setBorder(null);
+	        verticalScrollBar.setUnitIncrement(20);
+	        verticalScrollBar.setBlockIncrement(100);
+	        add(scrollPane);
+
+		
+		notice.setIcon(new ImageIcon(Cart.class.getResource("/resources/cartNotice.png")));
+		notice.setBounds(272, 76, 185, 32);
+		add(notice);
 		
 		cartNamePane = new JLabel("Cart");
 		cartNamePane.setForeground(Color.WHITE);
@@ -79,7 +110,11 @@ public class Cart extends JPanel {
 		exit.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				notice.setVisible(false);
 				home.cartPane.setVisible(false);
+				home.shoppingCart.setVisible(false);
+				repaint();
+		        revalidate();
 			}
 		});
 		
@@ -88,71 +123,98 @@ public class Cart extends JPanel {
 		add(exit);
 		
 		checkoutBtn = new JLabel("");
-		checkoutBtn.setBounds(284, 688, 233, 71);
+		checkoutBtn.setIcon(new ImageIcon(Cart.class.getResource("/resources/checkoutbtn.png")));
+		checkoutBtn.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if(home.table.getTableModel().getRowCount() == 0) {
+					System.out.println("Your cart is empty. Cannot proceed to checkout.");
+					notice.setVisible(true);
+				}else {
+					notice.setVisible(false);
+					home.paymentPane.add(home.checkout);
+					home.getContentPane().setComponentZOrder(home.paymentPane, 0);
+					home.cartPane.setVisible(false);
+					home.paymentPane.setVisible(true);
+					home.checkout.setVisible(true);
+					System.out.println("Nice bai");
+					System.out.println("Total price is :" + home.table.calculateTotalSum());
+					repaint();
+					revalidate();
+				}
+			}
+		});
+		checkoutBtn.setBounds(285, 693, 233, 66);
 		add(checkoutBtn);
 		
 		bg = new JLabel("");
-		bg.setIcon(new ImageIcon(Cart.class.getResource("/resources/CartCard.png")));
+		bg.setIcon(new ImageIcon(Cart.class.getResource("/resources/maskPaneBg.png")));
 		bg.setBounds(0, 0, 517, 759);
 		add(bg);
 	}
 	
-	public void addCartPane() {
-		JPanel cartPane = createCartPane();
+	public void addCartPane(String plantName, String quantity, String retailPrice) {
+		JPanel cartPane = createCartPane(plantName, quantity, retailPrice);
+		cartPanes.add(cartPane);
         cartPane.setVisible(true);
         mainPanel.add(cartPane);
         numRows++;
         mainPanel.setPreferredSize(new Dimension(397, 107 * numRows));
         mainPanel.revalidate();
         mainPanel.repaint();
-        
+        home.checkout.updateTestSum();
+        shippingFee();
         System.out.println("Rows added: " + numRows);
     }
 	
 	private void removeCartPane(JPanel mainPanel, JPanel cartPaneToRemove) {
-		mainPanel.remove(cartPaneToRemove);
-		mainPanel.revalidate();
-		mainPanel.repaint();
+		cartPanes.remove(cartPaneToRemove);
+	    mainPanel.remove(cartPaneToRemove);
+	    home.checkout.updateTestSum();
+	    home.pdc.cartCountNumber--;
+	    home.cartNumberSetter.setText(Integer.toString(home.pdc.cartCountNumber));
+	    mainPanel.revalidate();
+	    mainPanel.repaint();
 	}
 	
-	public JPanel createCartPane() {
-        JPanel cartPane = new JPanel();
-        cartPane.setVisible(true);
-        cartPane.setLayout(null);
-        cartPane.setOpaque(false);
-        cartPane.setBackground(Color.BLACK); 
-        cartPane.setPreferredSize(new Dimension(397, 107));
+	public JPanel createCartPane(String plantName, String quantity, String retailPrice) {
+	    JPanel cartPane = new JPanel();
+	    cartPane.setVisible(true);
+	    cartPane.setLayout(null);
+	    cartPane.setOpaque(false);
+	    cartPane.setBackground(Color.BLACK);
+	    cartPane.setPreferredSize(new Dimension(397, 107));
 
-        JLabel lblNewLabel_1 = new JLabel("");
-        lblNewLabel_1.setIcon(new ImageIcon(Cart.class.getResource("/resources/cartCardMask (1).png")));
-        lblNewLabel_1.setBounds(0, 0, 397, 107);
-        cartPane.add(lblNewLabel_1);
-        
-        JLabel plantName = new JLabel(home.pdc.extractPlantName);
-        plantName.setHorizontalAlignment(SwingConstants.RIGHT);
-        plantName.setForeground(Color.WHITE);
-        plantName.setFont(new Font("Montserrat", Font.BOLD, 14));
-        plantName.setBounds(215, 12, 159, 18);
-        cartPane.add(plantName);
+	    JLabel lblNewLabel_1 = new JLabel("");
+	    lblNewLabel_1.setIcon(new ImageIcon(Cart.class.getResource("/resources/cartCardMask (1).png")));
+	    lblNewLabel_1.setBounds(0, 0, 397, 107);
+	    cartPane.add(lblNewLabel_1);
 
-        JLabel plantQuantity = new JLabel("Quantity: x" + home.pdc.extractQuantityNumber);
-        plantQuantity.setForeground(new Color(255, 255, 255));
-        plantQuantity.setFont(new Font("Montserrat", Font.PLAIN, 9));
-        plantQuantity.setHorizontalAlignment(SwingConstants.RIGHT);
-        plantQuantity.setBounds(148, 30, 225, 14);
-        cartPane.add(plantQuantity);
+	    plantNameLabel = new JLabel(plantName);
+	    plantNameLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+	    plantNameLabel.setForeground(Color.WHITE);
+	    plantNameLabel.setFont(new Font("Montserrat", Font.BOLD, 14));
+	    plantNameLabel.setBounds(215, 12, 159, 18);
+	    cartPane.add(plantNameLabel);
 
-        JLabel plantPrice = new JLabel(home.pdc.extractRetailPrice);
-        plantPrice.setHorizontalAlignment(SwingConstants.RIGHT);
-        plantPrice.setForeground(Color.WHITE);
-        plantPrice.setFont(new Font("Montserrat", Font.BOLD, 22));
-        plantPrice.setBounds(148, 49, 225, 27);
-        cartPane.add(plantPrice);
+	    plantQuantity = new JLabel("x" + quantity);
+	    plantQuantity.setForeground(new Color(255, 255, 255));
+	    plantQuantity.setFont(new Font("Montserrat", Font.BOLD, 12));
+	    plantQuantity.setHorizontalAlignment(SwingConstants.RIGHT);
+	    plantQuantity.setBounds(98, 74, 20, 14);
+	    cartPane.add(plantQuantity);
 
-        JLabel plantImage = new JLabel("");
-        plantImage.setBounds(23, 12, 69, 77); 
-    	
-        if(home.pdc.extractPlantName == "Hydrangea") {
+	    plantPrice = new JLabel(retailPrice);
+	    plantPrice.setHorizontalAlignment(SwingConstants.RIGHT);
+	    plantPrice.setForeground(Color.WHITE);
+	    plantPrice.setFont(new Font("Montserrat", Font.BOLD, 22));
+	    plantPrice.setBounds(148, 49, 225, 27);
+	    cartPane.add(plantPrice);
+
+	    plantImage = new JLabel("");
+	    plantImage.setBounds(23, 12, 69, 77);
+	    
+	    if(home.pdc.extractPlantName == "Hydrangea") {
         	plantImage.setIcon(new ImageIcon(Cart.class.getResource("/resources/hydrangeaCartIcon.png")));
         }else if(home.pdc.extractPlantName == "Sage"){
         	plantImage.setIcon(new ImageIcon(Cart.class.getResource("/resources/sageCartIcon.png")));
@@ -175,31 +237,62 @@ public class Cart extends JPanel {
         }else {
         	System.out.println("Plant image invalid!");
         }
-        
-        cartPane.add(plantImage);
-        
-        JButton removeButton = new JButton("");
-        removeButton.setBounds(311, 78, 63, 15);
-        removeButton.setOpaque(false);
-        removeButton.setBackground(Color.BLACK);
-        removeButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                removeCartPane(cartPane);
-            }
-        });
-        cartPane.add(removeButton);
+	    
+	    cartPane.add(plantImage);
 
-        return cartPane;
-    }
+	    JButton removeButton = new JButton("");
+	    removeButton.setBounds(311, 78, 63, 15);
+	    removeButton.setOpaque(false);
+	    removeButton.setBackground(Color.BLACK);
+	    removeButton.addActionListener(new ActionListener() {
+	        public void actionPerformed(ActionEvent e) {
+	            JButton sourceButton = (JButton) e.getSource();
+	            JPanel cartPaneToRemove = (JPanel) sourceButton.getParent();
+	            int rowIndex = mainPanel.getComponentZOrder(cartPaneToRemove);
+	            String plantName = extractPlantNameFromCartPane(cartPaneToRemove);
+	            home.pdc.model.removeRow(rowIndex);
+	            removeCartPane(mainPanel, cartPaneToRemove);
+	            System.out.println("A cart has been removed: " + plantName);
+	            System.out.println("The total sum now is: " + home.table.calculateTotalSum());
+	        }
+	    });
+	    cartPane.add(removeButton);
+
+	    return cartPane;
+	}
+
 	
-	private void removeCartPane(JPanel cartPane) {
-        mainPanel.remove(cartPane);
-        numRows--;
-        mainPanel.setPreferredSize(new Dimension(397 * numRows, 107));
+	private String extractPlantNameFromCartPane(JPanel cartPane) {
+	    Component[] components = cartPane.getComponents();
+	    if (components.length >= 1 && components[1] instanceof JLabel) {
+	        JLabel plantNameLabel = (JLabel) components[1];
+	        return plantNameLabel.getText();
+	    }
+	    return null;
+	}
+	
+	
+	public void removeAllCartPanes() {
+		for (JPanel cartPane : cartPanes) {
+            mainPanel.remove(cartPane);
+        }
+		cartPanes.clear();
+        numRows = 0; 
+        mainPanel.setPreferredSize(new Dimension(397, 107));
         mainPanel.revalidate();
         mainPanel.repaint();
-        home.pdc.cartCountNumber--;
-        home.cartNumberSetter.setText(Integer.toString(home.pdc.cartCountNumber));
-        System.out.println("Row removed: " + numRows);
-    }
+        home.pdc.cartCountNumber = 0; // Reset the cart count
+        home.cartNumberSetter.setText("0");
+        System.out.println("All items have been removed from the cart");
+	}
+	
+	public int shippingFee() {
+	    if (cartPanes.size() > 0) {
+	        home.checkout.shippingSubtotalAmount.setText("₱ 100");
+	        home.cps.shippingSubtotalAmount.setText("₱ 100");
+	        return 100;
+	    }
+	    return 0;
+	}
 }
+
