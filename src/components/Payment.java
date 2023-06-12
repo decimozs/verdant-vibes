@@ -39,6 +39,7 @@ public class Payment extends JPanel {
     public JTextField passwordPin;
     public JTextField accessCode;
     public JLabel amount;
+    public String pin;
     private JLabel payBtn;
     public int testSum;
     public JLabel addressChoice;
@@ -49,6 +50,7 @@ public class Payment extends JPanel {
     public String cardnumber;
     public String noDays;
     public String noMonth;
+    public String code;
     public String noYears;
     public String cvvPin;
     public JLabel merchandiseSubtotalAmount;
@@ -431,6 +433,24 @@ public class Payment extends JPanel {
         digitalWalletMenu.add(username);
 
         passwordPin = new JTextField();
+
+        passwordPin.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                pin = home.auth.containOnlyDigits(passwordPin.getText());
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                pin = home.auth.containOnlyDigits(passwordPin.getText());
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                pin = home.auth.containOnlyDigits(passwordPin.getText());
+            }
+        });
+
         passwordPin.setOpaque(false);
         passwordPin.setForeground(Color.WHITE);
         passwordPin.setFont(new Font("Montserrat", Font.PLAIN, 18));
@@ -441,6 +461,24 @@ public class Payment extends JPanel {
         digitalWalletMenu.add(passwordPin);
 
         accessCode = new JTextField();
+
+        accessCode.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                code = home.auth.containOnlyDigits(accessCode.getText());
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                code = home.auth.containOnlyDigits(accessCode.getText());
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                code = home.auth.containOnlyDigits(accessCode.getText());
+            }
+        });
+
         accessCode.setOpaque(false);
         accessCode.setForeground(Color.WHITE);
         accessCode.setFont(new Font("Montserrat", Font.PLAIN, 18));
@@ -1095,23 +1133,23 @@ public class Payment extends JPanel {
     private void paymentCashOnDelivery() {
         try {
             home.cps.modeOfPayment.setText("Cash on Delivery");
-        cashOnDelivery.setFont(new Font("Montserrat", Font.BOLD, 13));
-        creditCard.setFont(new Font("Montserrat", Font.PLAIN, 13));
-        debitCard.setFont(new Font("Montserrat", Font.PLAIN, 13));
-        digitalWallet.setFont(new Font("Montserrat", Font.PLAIN, 13));
-        creditDebitCardMenu.setVisible(false);
-        codMenu.setVisible(true);
-        digitalWalletMenu.setVisible(false);
-        day.setText("");
-        year.setText("");
-        month.setText("");
-        cvv.setText("");
-        cardHolder.setText("");
-        cardNumber.setText("");
-        username.setText("");
-        passwordPin.setText("");
-        accessCode.setText("");
-        System.out.println("Your payment method is Cash on Delivery");
+            cashOnDelivery.setFont(new Font("Montserrat", Font.BOLD, 13));
+            creditCard.setFont(new Font("Montserrat", Font.PLAIN, 13));
+            debitCard.setFont(new Font("Montserrat", Font.PLAIN, 13));
+            digitalWallet.setFont(new Font("Montserrat", Font.PLAIN, 13));
+            creditDebitCardMenu.setVisible(false);
+            codMenu.setVisible(true);
+            digitalWalletMenu.setVisible(false);
+            day.setText("");
+            year.setText("");
+            month.setText("");
+            cvv.setText("");
+            cardHolder.setText("");
+            cardNumber.setText("");
+            username.setText("");
+            passwordPin.setText("");
+            accessCode.setText("");
+            System.out.println("Your payment method is Cash on Delivery");
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("Failed to choose Cash on Delivery for your payment method");
@@ -1121,26 +1159,26 @@ public class Payment extends JPanel {
     private void paymentCreditCard() {
         try {
             home.cps.modeOfPayment.setText("Credit Card");
-        cashOnDelivery.setFont(new Font("Montserrat", Font.PLAIN, 13));
-        creditCard.setFont(new Font("Montserrat", Font.BOLD, 13));
-        debitCard.setFont(new Font("Montserrat", Font.PLAIN, 13));
-        digitalWallet.setFont(new Font("Montserrat", Font.PLAIN, 13));
-        creditDebitCardMenu.setVisible(true);
-        codMenu.setVisible(false);
-        digitalWalletMenu.setVisible(false);
-        firstname.setText("");
-        initial.setText("");
-        lastname.setText("");
-        day.setText("");
-        year.setText("");
-        month.setText("");
-        cvv.setText("");
-        cardHolder.setText("");
-        cardNumber.setText("");
-        username.setText("");
-        passwordPin.setText("");
-        accessCode.setText("");
-        System.out.println("Your payment method is Credit Card");
+            cashOnDelivery.setFont(new Font("Montserrat", Font.PLAIN, 13));
+            creditCard.setFont(new Font("Montserrat", Font.BOLD, 13));
+            debitCard.setFont(new Font("Montserrat", Font.PLAIN, 13));
+            digitalWallet.setFont(new Font("Montserrat", Font.PLAIN, 13));
+            creditDebitCardMenu.setVisible(true);
+            codMenu.setVisible(false);
+            digitalWalletMenu.setVisible(false);
+            firstname.setText("");
+            initial.setText("");
+            lastname.setText("");
+            day.setText("");
+            year.setText("");
+            month.setText("");
+            cvv.setText("");
+            cardHolder.setText("");
+            cardNumber.setText("");
+            username.setText("");
+            passwordPin.setText("");
+            accessCode.setText("");
+            System.out.println("Your payment method is Credit Card");
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("Failed to choose Credit Card for your payment method");
@@ -1150,26 +1188,26 @@ public class Payment extends JPanel {
     private void paymentDebitCard() {
         try {
             home.cps.modeOfPayment.setText("Debit Card");
-        cashOnDelivery.setFont(new Font("Montserrat", Font.PLAIN, 13));
-        creditCard.setFont(new Font("Montserrat", Font.PLAIN, 13));
-        debitCard.setFont(new Font("Montserrat", Font.BOLD, 13));
-        digitalWallet.setFont(new Font("Montserrat", Font.PLAIN, 13));
-        creditDebitCardMenu.setVisible(true);
-        codMenu.setVisible(false);
-        digitalWalletMenu.setVisible(false);
-        firstname.setText("");
-        initial.setText("");
-        lastname.setText("");
-        day.setText("");
-        year.setText("");
-        month.setText("");
-        cvv.setText("");
-        cardHolder.setText("");
-        cardNumber.setText("");
-        username.setText("");
-        passwordPin.setText("");
-        accessCode.setText("");
-        System.out.println("Your payment method is Debit Card");
+            cashOnDelivery.setFont(new Font("Montserrat", Font.PLAIN, 13));
+            creditCard.setFont(new Font("Montserrat", Font.PLAIN, 13));
+            debitCard.setFont(new Font("Montserrat", Font.BOLD, 13));
+            digitalWallet.setFont(new Font("Montserrat", Font.PLAIN, 13));
+            creditDebitCardMenu.setVisible(true);
+            codMenu.setVisible(false);
+            digitalWalletMenu.setVisible(false);
+            firstname.setText("");
+            initial.setText("");
+            lastname.setText("");
+            day.setText("");
+            year.setText("");
+            month.setText("");
+            cvv.setText("");
+            cardHolder.setText("");
+            cardNumber.setText("");
+            username.setText("");
+            passwordPin.setText("");
+            accessCode.setText("");
+            System.out.println("Your payment method is Debit Card");
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("Failed to choose Debit Card for your payment method");
@@ -1179,23 +1217,23 @@ public class Payment extends JPanel {
     private void paymentDigitalWallet() {
         try {
             home.cps.modeOfPayment.setText("Digital Wallet");
-        cashOnDelivery.setFont(new Font("Montserrat", Font.PLAIN, 13));
-        creditCard.setFont(new Font("Montserrat", Font.PLAIN, 13));
-        debitCard.setFont(new Font("Montserrat", Font.PLAIN, 13));
-        digitalWallet.setFont(new Font("Montserrat", Font.BOLD, 13));
-        creditDebitCardMenu.setVisible(false);
-        codMenu.setVisible(false);
-        digitalWalletMenu.setVisible(true);
-        firstname.setText("");
-        initial.setText("");
-        lastname.setText("");
-        day.setText("");
-        year.setText("");
-        month.setText("");
-        cvv.setText("");
-        cardHolder.setText("");
-        cardNumber.setText("");
-        System.out.println("Your payment method is Digital Wallet");
+            cashOnDelivery.setFont(new Font("Montserrat", Font.PLAIN, 13));
+            creditCard.setFont(new Font("Montserrat", Font.PLAIN, 13));
+            debitCard.setFont(new Font("Montserrat", Font.PLAIN, 13));
+            digitalWallet.setFont(new Font("Montserrat", Font.BOLD, 13));
+            creditDebitCardMenu.setVisible(false);
+            codMenu.setVisible(false);
+            digitalWalletMenu.setVisible(true);
+            firstname.setText("");
+            initial.setText("");
+            lastname.setText("");
+            day.setText("");
+            year.setText("");
+            month.setText("");
+            cvv.setText("");
+            cardHolder.setText("");
+            cardNumber.setText("");
+            System.out.println("Your payment method is Digital Wallet");
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("Failed to choose Digital Wallet for your payment method");

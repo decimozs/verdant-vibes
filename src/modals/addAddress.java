@@ -100,19 +100,19 @@ public class addAddress extends JFrame {
 		streetnumber.getDocument().addDocumentListener(new DocumentListener() {
 			@Override
 			public void insertUpdate(DocumentEvent e) {
-				setStreetNumber = home.auth.capitalizeFirstLetter(streetnumber.getText());
+				setStreetNumber = home.auth.containOnlyDigits(streetnumber.getText());
 				updateAddBtnText();
 			}
 
 			@Override
 			public void removeUpdate(DocumentEvent e) {
-				setStreetNumber = home.auth.capitalizeFirstLetter(streetnumber.getText());
+				setStreetNumber = home.auth.containOnlyDigits(streetnumber.getText());
 				updateAddBtnText();
 			}
 
 			@Override
 			public void changedUpdate(DocumentEvent e) {
-				setStreetNumber = home.auth.capitalizeFirstLetter(streetnumber.getText());
+				setStreetNumber = home.auth.containOnlyDigits(streetnumber.getText());
 				updateAddBtnText();
 			}
 		});
@@ -255,19 +255,19 @@ public class addAddress extends JFrame {
 		postalcode.getDocument().addDocumentListener(new DocumentListener() {
 			@Override
 			public void insertUpdate(DocumentEvent e) {
-				setPostalCode = home.auth.capitalizeFirstLetter(postalcode.getText());
+				setPostalCode = home.auth.containOnlyDigits(postalcode.getText());
 				updateAddBtnText();
 			}
 
 			@Override
 			public void removeUpdate(DocumentEvent e) {
-				setPostalCode = home.auth.capitalizeFirstLetter(postalcode.getText());
+				setPostalCode = home.auth.containOnlyDigits(postalcode.getText());
 				updateAddBtnText();
 			}
 
 			@Override
 			public void changedUpdate(DocumentEvent e) {
-				setPostalCode = home.auth.capitalizeFirstLetter(postalcode.getText());
+				setPostalCode = home.auth.containOnlyDigits(postalcode.getText());
 				updateAddBtnText();
 			}
 		});

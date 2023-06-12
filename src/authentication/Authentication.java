@@ -33,6 +33,15 @@ public class Authentication {
 	    return result.toString();
 	}
 
+	public String containOnlyDigits(String input) {
+		   if (!input.matches("\\d+")) {
+			   System.out.println("Please enter only numeric values");
+		   }else{
+				return "";
+		   }
+		   return "";
+   }
+
 	public String containDigits(String input) {
 		 if (input == null || input.isEmpty()) {
 		        System.out.println("Please enter a 3 to 4 digit value!");
@@ -79,7 +88,6 @@ public class Authentication {
 	        System.out.println("Invalid number of days for February");
 	        return "";
 	    }
-	    
 
 	    return "Days: " + input;
 	}
@@ -98,6 +106,7 @@ public class Authentication {
 
 	    String monthName = getMonthName(input);
 	    System.out.println(monthName);
+		input = getMonthName(input);
 
 	    return "Month: " + input;
 	}
@@ -162,7 +171,6 @@ public class Authentication {
 	    }
 	}
 
-
 	public String years(String input) {
 	    if (input == null || input.isEmpty()) {
 	        System.out.println("Please enter the year!");
@@ -185,7 +193,7 @@ public class Authentication {
 
 	public void limitInput(JTextField components, int limit) {
         String input = components.getText();
-        int characterLimit = limit; // Set the character limit to 16
+        int characterLimit = limit;
 
         if (input.length() > characterLimit) {
         	components.setText(input.substring(0, characterLimit));
