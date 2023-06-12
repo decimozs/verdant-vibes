@@ -63,10 +63,12 @@ public class LoginForm extends JFrame {
 		
 		JLabel loginBtn = new JLabel("");
 		loginBtn.addMouseListener(new MouseAdapter() {
+			private boolean accountFound = true;
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				login();
-				setVisible(false);
+				if(accountFound){
+					login();
+				}
 			}
 		});
 		loginBtn.setBounds(356, 544, 114, 40);
@@ -74,16 +76,11 @@ public class LoginForm extends JFrame {
 		
 		JLabel createBtn = new JLabel("");
 		createBtn.addMouseListener(new MouseAdapter() {
-			private boolean check = true;
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if(check) {
-					RegisterForm lf = new RegisterForm();
-					lf.setVisible(true);
-					setVisible(false);
-				}else {
-					System.out.println("Account not found!");
-				}
+				RegisterForm lf = new RegisterForm();
+				lf.setVisible(true);
+				setVisible(false);
 			}
 		});
 		createBtn.setBounds(232, 544, 114, 40);
@@ -102,7 +99,7 @@ public class LoginForm extends JFrame {
 	    String enteredPassword = new String(enteredPasswordChars);
 	    password.setText("");
 		
-        try (BufferedReader reader = new BufferedReader(new FileReader("/account.txt"))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader("database.txt"))) {
             String line;
             boolean accountFound = false;
 
@@ -117,11 +114,16 @@ public class LoginForm extends JFrame {
 
             if (accountFound) {
                 new LoadingScreen().setVisible(true);
+				setVisible(false);
+				System.out.println("Account found!");
             } else {
         		notice.setVisible(true);
+				System.out.println("Account not found!");
             }
+
         } catch (IOException e) {
             e.printStackTrace();
+			System.out.println("Theres a problem in the stream (Account is not working)");
         }
     }
 }

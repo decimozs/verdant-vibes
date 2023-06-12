@@ -315,6 +315,7 @@ public class Home extends JFrame {
 		mlplants5 = new JLabel("");
 		mlplants5.addMouseListener(new MouseAdapter() {
 			private boolean toggle = true;
+
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (toggle) {
@@ -337,6 +338,7 @@ public class Home extends JFrame {
 		mlplants3 = new JLabel("");
 		mlplants3.addMouseListener(new MouseAdapter() {
 			private boolean toggle = true;
+
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (toggle) {
@@ -359,6 +361,7 @@ public class Home extends JFrame {
 		mlplants2 = new JLabel("");
 		mlplants2.addMouseListener(new MouseAdapter() {
 			private boolean toggle = true;
+
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (toggle) {
@@ -381,6 +384,7 @@ public class Home extends JFrame {
 		mlplants1 = new JLabel("");
 		mlplants1.addMouseListener(new MouseAdapter() {
 			private boolean toggle = true;
+
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (toggle) {
@@ -403,6 +407,7 @@ public class Home extends JFrame {
 		mlplants1_1 = new JLabel("");
 		mlplants1_1.addMouseListener(new MouseAdapter() {
 			private boolean toggle = true;
+
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (toggle) {
@@ -439,6 +444,7 @@ public class Home extends JFrame {
 		mlplants5_1 = new JLabel("");
 		mlplants5_1.addMouseListener(new MouseAdapter() {
 			private boolean toggle = true;
+
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (toggle) {
@@ -461,6 +467,7 @@ public class Home extends JFrame {
 		mlplants2_1 = new JLabel("");
 		mlplants2_1.addMouseListener(new MouseAdapter() {
 			private boolean toggle = true;
+
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (toggle) {
@@ -483,6 +490,7 @@ public class Home extends JFrame {
 		mlplants1_2 = new JLabel("");
 		mlplants1_2.addMouseListener(new MouseAdapter() {
 			private boolean toggle = true;
+
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (toggle) {
@@ -505,6 +513,7 @@ public class Home extends JFrame {
 		mlplants1_3 = new JLabel("");
 		mlplants1_3.addMouseListener(new MouseAdapter() {
 			private boolean toggle = true;
+
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (toggle) {
@@ -709,6 +718,7 @@ public class Home extends JFrame {
 		cart = new JLabel("");
 		cart.addMouseListener(new MouseAdapter() {
 			private boolean toggle = true;
+
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (toggle) {
@@ -755,6 +765,7 @@ public class Home extends JFrame {
 		t1 = new JLabel("");
 		t1.addMouseListener(new MouseAdapter() {
 			private boolean toggle = true;
+
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (toggle) {
@@ -777,6 +788,7 @@ public class Home extends JFrame {
 		t2 = new JLabel("");
 		t2.addMouseListener(new MouseAdapter() {
 			private boolean toggle = true;
+
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (toggle) {
@@ -835,6 +847,7 @@ public class Home extends JFrame {
 		s2 = new JLabel("");
 		s2.addMouseListener(new MouseAdapter() {
 			private boolean toggle = true;
+
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (toggle) {
@@ -857,6 +870,7 @@ public class Home extends JFrame {
 		s1 = new JLabel("");
 		s1.addMouseListener(new MouseAdapter() {
 			private boolean toggle = true;
+
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (toggle) {
@@ -938,6 +952,7 @@ public class Home extends JFrame {
 		creepers2 = new JLabel("");
 		creepers2.addMouseListener(new MouseAdapter() {
 			private boolean toggle = true;
+
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (toggle) {
@@ -960,6 +975,7 @@ public class Home extends JFrame {
 		creepers1 = new JLabel("");
 		creepers1.addMouseListener(new MouseAdapter() {
 			private boolean toggle = true;
+
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (toggle) {
@@ -1034,6 +1050,7 @@ public class Home extends JFrame {
 		h2 = new JLabel("");
 		h2.addMouseListener(new MouseAdapter() {
 			private boolean toggle = true;
+
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (toggle) {
@@ -1056,6 +1073,7 @@ public class Home extends JFrame {
 		h1 = new JLabel("");
 		h1.addMouseListener(new MouseAdapter() {
 			private boolean toggle = true;
+
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (toggle) {
@@ -1114,6 +1132,7 @@ public class Home extends JFrame {
 		c1 = new JLabel("");
 		c1.addMouseListener(new MouseAdapter() {
 			private boolean toggle = true;
+
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (toggle) {
@@ -1136,6 +1155,7 @@ public class Home extends JFrame {
 		c2 = new JLabel("");
 		c2.addMouseListener(new MouseAdapter() {
 			private boolean toggle = true;
+
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (toggle) {
@@ -1588,13 +1608,19 @@ public class Home extends JFrame {
 		revalidate();
 	}
 
-	private void cancelShip(){
-		shipPane.setVisible(false);
-		cancelShipBtn.setVisible(false);
-		noParcelPending.setVisible(true);
-		shippingNumberSetter.setText("1");
-		repaint();
-		revalidate();
+	private void cancelShip() {
+		try {
+			shipPane.setVisible(false);
+			cancelShipBtn.setVisible(false);
+			noParcelPending.setVisible(true);
+			shippingNumberSetter.setText("0");
+			System.out.println("Parcel cancelled successfully");
+			repaint();
+			revalidate();
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("Failed to cancel the parcel!");
+		}
 	}
 
 	private void setMostLovedText() {

@@ -5,16 +5,14 @@ public class Conifers extends Plant {
         super(name, category, family, price, image, description);
     }
 
-    // Getter for the name property
     public String getName() {
         return super.getName();
     }
 
-    // Setter for the name property
     public void setName(String name) {
         super.setName(name);
     }
-
+    
     // Getter for the category property
     public String getCategory() {
         return super.getCategory();

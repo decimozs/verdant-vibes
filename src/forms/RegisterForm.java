@@ -30,7 +30,6 @@ public class RegisterForm extends JFrame {
 		setBounds(710, 233, 500, 613);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(0, 0, 0, 0));
-
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
@@ -41,42 +40,22 @@ public class RegisterForm extends JFrame {
 		notice.setBounds(228, 265, 243, 51);
 		contentPane.add(notice);
 
-		username = new JTextField();
-		username.setOpaque(false);
-		username.setForeground(Color.WHITE);
-		username.setFont(new Font("Montserrat", Font.PLAIN, 13));
-		username.setColumns(10);
-		username.setBorder(null);
-		username.setBounds(242, 361, 216, 27);
-		contentPane.add(username);
-
-		password = new JTextField();
-		password.setOpaque(false);
-		password.setFont(new Font("Montserrat", Font.PLAIN, 13));
-		password.setForeground(Color.WHITE);
-		password.setBorder(null);
-		password.setBounds(242, 415, 216, 27);
-		contentPane.add(password);
-		password.setColumns(10);
-
-		reEnterPassword = new JTextField();
-		reEnterPassword.setOpaque(false);
-		reEnterPassword.setBackground(Color.BLACK);
-		reEnterPassword.setFont(new Font("Montserrat", Font.PLAIN, 13));
-		reEnterPassword.setForeground(Color.WHITE);
-		reEnterPassword.setBorder(null);
-		reEnterPassword.setColumns(10);
-		reEnterPassword.setBounds(242, 466, 216, 27);
-		contentPane.add(reEnterPassword);
+		username = createTextField(242, 361, 216, 27);
+		password = createTextField(242, 415, 216, 27);
+		reEnterPassword = createTextField(242, 466, 216, 27);
 
 		JLabel createBtn = new JLabel("");
-
 		createBtn.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				saveAccountToFile();
-				setVisible(false);
-				new LoginForm().setVisible(true);
+				if (!password.getText().equals(reEnterPassword.getText())) {
+					notice.setVisible(true);
+				} else {
+					saveAccountToFile();
+					setVisible(false);
+					new LoginForm().setVisible(true);
+					notice.setVisible(false);
+				}
 			}
 		});
 
@@ -87,6 +66,18 @@ public class RegisterForm extends JFrame {
 		lblNewLabel.setIcon(new ImageIcon(RegisterForm.class.getResource("/resources/createMaskNew1.png")));
 		lblNewLabel.setBounds(0, 0, 500, 612);
 		contentPane.add(lblNewLabel);
+	}
+
+	private JTextField createTextField(int x, int y, int width, int height) {
+		JTextField textField = new JTextField();
+		textField.setOpaque(false);
+		textField.setForeground(Color.WHITE);
+		textField.setFont(new Font("Montserrat", Font.PLAIN, 13));
+		textField.setColumns(10);
+		textField.setBorder(null);
+		textField.setBounds(x, y, width, height);
+		contentPane.add(textField);
+		return textField;
 	}
 
 	private void saveAccountToFile() {
@@ -104,15 +95,13 @@ public class RegisterForm extends JFrame {
 			return;
 		}
 
-		try (BufferedWriter writer = new BufferedWriter(new FileWriter("account.txt", true))) {
+		try (BufferedWriter writer = new BufferedWriter(new FileWriter("database.txt", true))) {
 			writer.write(usernameText + ":" + passwordText);
 			writer.newLine();
 			writer.flush();
-			writer.close();
 
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
-
 }

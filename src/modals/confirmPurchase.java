@@ -40,9 +40,13 @@ public class confirmPurchase extends JPanel {
 		exit.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				home.cpPane.setVisible(false);
-				repaint();
-				revalidate();
+				try {
+					home.cpPane.setVisible(false);
+					repaint();
+					revalidate();
+				} catch (Exception err) {
+					err.printStackTrace();
+				}
 			}
 		});
 
@@ -148,14 +152,14 @@ public class confirmPurchase extends JPanel {
 		cpBtn.setBounds(328, 419, 325, 73);
 		add(cpBtn);
 
-		merchandeFinalSubtotalAmount = new JLabel(" ₱ 0");
+		merchandeFinalSubtotalAmount = new JLabel("₱   0");
 		merchandeFinalSubtotalAmount.setHorizontalAlignment(SwingConstants.RIGHT);
 		merchandeFinalSubtotalAmount.setForeground(Color.WHITE);
 		merchandeFinalSubtotalAmount.setFont(new Font("Montserrat", Font.BOLD, 9));
 		merchandeFinalSubtotalAmount.setBounds(208, 392, 81, 14);
 		add(merchandeFinalSubtotalAmount);
 
-		shippingSubtotalAmount = new JLabel(" ₱  0");
+		shippingSubtotalAmount = new JLabel("₱   0");
 		shippingSubtotalAmount.setHorizontalAlignment(SwingConstants.RIGHT);
 		shippingSubtotalAmount.setForeground(Color.WHITE);
 		shippingSubtotalAmount.setFont(new Font("Montserrat", Font.BOLD, 9));
@@ -172,42 +176,48 @@ public class confirmPurchase extends JPanel {
 	}
 
 	private void confirmingPurchase() {
-		int duration = 2;
-		long generateOrderNo = home.auth.orderNumberGenerator();
+		try {
+			int duration = 2;
+			long generateOrderNo = home.auth.orderNumberGenerator();
 
-		lblOrderNo.setText("Order no: " + generateOrderNo);
-		home.checkout.shippingSubtotalAmount.setText(" ₱ 0");
-		home.checkout.merchandiseSubtotalAmount.setText(" ₱ 0");
-		home.checkout.amount.setText(" ₱ 0");
-		merchandeFinalSubtotalAmount.setText(" ₱ 0");
-		shippingSubtotalAmount.setText(" ₱ 0");
-		home.table.getTableModel().setRowCount(0);
-		home.shoppingCart.removeAllCartPanes();
-		home.cpPane.setVisible(false);
-		home.thanksPane.add(home.pgs);
-		home.getContentPane().setComponentZOrder(home.thanksPane, 0);
-		home.thanksPane.setVisible(true);
-		home.pgs.setVisible(true);
-		home.shippingNumberSetter.setText("1");
-		home.shippingIndicatorMask.setVisible(true);
-		home.shipPane.setVisible(true);
-		home.noParcelPending.setVisible(false);
-		home.cancelShipBtn.setVisible(true);
-		home.noticeShippingStatus.setVisible(true);
-		home.notified.setVisible(true);
+			lblOrderNo.setText("Order no: " + generateOrderNo);
+			home.checkout.shippingSubtotalAmount.setText("₱   0");
+			home.checkout.merchandiseSubtotalAmount.setText("₱   0");
+			home.checkout.amount.setText("₱   0");
+			merchandeFinalSubtotalAmount.setText("₱   0");
+			shippingSubtotalAmount.setText("₱   0");
+			home.table.getTableModel().setRowCount(0);
+			home.shoppingCart.removeAllCartPanes();
+			home.cpPane.setVisible(false);
+			home.thanksPane.add(home.pgs);
+			home.getContentPane().setComponentZOrder(home.thanksPane, 0);
+			home.thanksPane.setVisible(true);
+			home.pgs.setVisible(true);
+			home.shippingNumberSetter.setText("1");
+			home.shippingIndicatorMask.setVisible(true);
+			home.shipPane.setVisible(true);
+			home.noParcelPending.setVisible(false);
+			home.cancelShipBtn.setVisible(true);
+			home.noticeShippingStatus.setVisible(true);
+			home.notified.setVisible(true);
 
-		new Thread(() -> {
-			try {
-				Thread.sleep(duration * 4000);
-			} catch (InterruptedException err) {
-				err.printStackTrace();
-			}
-			home.noticeShippingStatus.setVisible(false);
-			home.notified.setVisible(false);
+			new Thread(() -> {
+				try {
+					Thread.sleep(duration * 4000);
+				} catch (InterruptedException err) {
+					err.printStackTrace();
+				}
+				home.noticeShippingStatus.setVisible(false);
+				home.notified.setVisible(false);
 
-		}).start();
+			}).start();
 
-		repaint();
-		revalidate();
+			System.out.println("Confirming purchase successful");
+			repaint();
+			revalidate();
+		} catch (Exception err) {
+			err.printStackTrace();
+			System.out.println("Failed to confirm the purchase!");
+		}
 	}
 }

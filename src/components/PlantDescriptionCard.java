@@ -45,6 +45,10 @@ public class PlantDescriptionCard extends JPanel {
 	public DefaultTableModel model;
 
 	public PlantDescriptionCard(Home home) {
+		if (home == null) {
+			throw new IllegalArgumentException("Home object cannot be null");
+		}	
+
 		this.home = home;
 		cart = new Cart(home);
 
@@ -72,58 +76,7 @@ public class PlantDescriptionCard extends JPanel {
 		addToCartBtn.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				int duration = 2;
-
-				extractPlantName = plantName.getText();
-				extractRetailPrice = retailPrice.getText();
-				String numericPrice = extractRetailPrice.replaceAll("[^0-9.]", "");
-				extractPrice = Double.parseDouble(numericPrice);
-				ImageIcon extractPlantIcon = (ImageIcon) plantIcon.getIcon();
-				extractQuantityNumber = quantityNumber.getText();
-				extractQuantity = Integer.parseInt(extractQuantityNumber);
-
-				int price = (int) (extractQuantity * extractPrice);
-
-				model = (DefaultTableModel) home.table.getTableModel();
-				model.addRow(new Object[] {
-						extractPlantIcon, extractPlantName, extractPrice, extractQuantity, price
-				});
-
-				count = 1;
-				updatedNumber = 1;
-				extractQuantity = 0;
-				quantityNumber.setText("1");
-
-				cartCountNumber++;
-				home.cartNumberSetter.setText(Integer.toString(cartCountNumber));
-
-				String pn = home.pdc.extractPlantName;
-				String qty = home.pdc.extractQuantityNumber;
-				String rp = home.pdc.extractRetailPrice;
-
-				home.shoppingCart.addCartPane(pn, qty, rp);
-
-				System.out.println("A new cart has been added!");
-				System.out.println("Plant: " + extractPlantName);
-				System.out.println("The total price is : " + home.table.calculateTotalSum());
-
-				home.noticeCartAdded.setVisible(true);
-				home.notified.setVisible(true);
-
-				new Thread(() -> {
-					try {
-						Thread.sleep(duration * 1000);
-					} catch (InterruptedException err) {
-						err.printStackTrace();
-					}
-
-					home.notified.setVisible(false);
-					home.noticeCartAdded.setVisible(false);
-
-				}).start();
-
-				repaint();
-				revalidate();
+				addItemToTheCart();
 			}
 		});
 
@@ -131,9 +84,15 @@ public class PlantDescriptionCard extends JPanel {
 		incrementBtn.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				count++;
-				updatedNumber = count;
-				quantityNumber.setText(Integer.toString(updatedNumber));
+				try {
+					count++;
+					updatedNumber = count;
+					quantityNumber.setText(Integer.toString(updatedNumber));
+					System.out.println("Quantity increase by 1");
+				} catch (Exception err) {
+					err.printStackTrace();
+					System.out.println("Failed to increase the quantity");
+				}
 			}
 		});
 
@@ -144,9 +103,15 @@ public class PlantDescriptionCard extends JPanel {
 		decrementBtn.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if (updatedNumber > 1) {
-					updatedNumber--;
-					quantityNumber.setText(Integer.toString(updatedNumber));
+				try {
+					if (updatedNumber > 1) {
+						updatedNumber--;
+						quantityNumber.setText(Integer.toString(updatedNumber));
+						System.out.println("Quantity decrease by 1");
+					}
+				} catch (Exception err) {
+					err.printStackTrace();
+					System.out.println("Failed to decreaset the quantity");
 				}
 			}
 		});
@@ -250,5 +215,65 @@ public class PlantDescriptionCard extends JPanel {
 		home.pdc.setVisible(false);
 		repaint();
 		revalidate();
+	}
+
+	private void addItemToTheCart() {
+		try {
+			int duration = 2;
+
+			extractPlantName = plantName.getText();
+			extractRetailPrice = retailPrice.getText();
+			String numericPrice = extractRetailPrice.replaceAll("[^0-9.]", "");
+			extractPrice = Double.parseDouble(numericPrice);
+			ImageIcon extractPlantIcon = (ImageIcon) plantIcon.getIcon();
+			extractQuantityNumber = quantityNumber.getText();
+			extractQuantity = Integer.parseInt(extractQuantityNumber);
+
+			int price = (int) (extractQuantity * extractPrice);
+
+			model = (DefaultTableModel) home.table.getTableModel();
+			model.addRow(new Object[] {
+					extractPlantIcon, extractPlantName, extractPrice, extractQuantity, price
+			});
+
+			count = 1;
+			updatedNumber = 1;
+			extractQuantity = 0;
+			quantityNumber.setText("1");
+
+			cartCountNumber++;
+			home.cartNumberSetter.setText(Integer.toString(cartCountNumber));
+
+			String pn = home.pdc.extractPlantName;
+			String qty = home.pdc.extractQuantityNumber;
+			String rp = home.pdc.extractRetailPrice;
+
+			home.shoppingCart.addCartPane(pn, qty, rp);
+
+			System.out.println("A new cart has been added!");
+			System.out.println("Plant: " + extractPlantName);
+			System.out.println("The total price is : " + home.table.calculateTotalSum());
+
+			home.noticeCartAdded.setVisible(true);
+			home.notified.setVisible(true);
+
+			new Thread(() -> {
+				try {
+					Thread.sleep(duration * 1000);
+				} catch (InterruptedException err) {
+					err.printStackTrace();
+				}
+
+				home.notified.setVisible(false);
+				home.noticeCartAdded.setVisible(false);
+
+			}).start();
+
+			repaint();
+			revalidate();
+		} catch (Exception err) {
+			err.printStackTrace();
+			System.out.println("Failed to add item to the cart");
+		}
 	}
 }

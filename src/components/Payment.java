@@ -64,6 +64,10 @@ public class Payment extends JPanel {
     public JLabel notice;
 
     public Payment(Home home) {
+        if (home == null) {
+            throw new IllegalArgumentException("Home object cannot be null");
+        }
+
         this.home = home;
 
         setVisible(false);
@@ -807,14 +811,14 @@ public class Payment extends JPanel {
         notice.setBounds(272, 85, 218, 32);
         add(notice);
 
-        shippingSubtotalAmount = new JLabel(" ₱ 0");
+        shippingSubtotalAmount = new JLabel(" ₱   0");
         shippingSubtotalAmount.setHorizontalAlignment(SwingConstants.RIGHT);
         shippingSubtotalAmount.setForeground(Color.WHITE);
         shippingSubtotalAmount.setFont(new Font("Montserrat", Font.BOLD, 11));
         shippingSubtotalAmount.setBounds(149, 653, 109, 14);
         add(shippingSubtotalAmount);
 
-        merchandiseSubtotalAmount = new JLabel(" ₱ 0");
+        merchandiseSubtotalAmount = new JLabel("₱   0");
         merchandiseSubtotalAmount.setHorizontalAlignment(SwingConstants.RIGHT);
         merchandiseSubtotalAmount.setForeground(Color.WHITE);
         merchandiseSubtotalAmount.setFont(new Font("Montserrat", Font.BOLD, 11));
@@ -964,6 +968,7 @@ public class Payment extends JPanel {
         payBtn = new JLabel("");
         payBtn.addMouseListener(new MouseAdapter() {
             private boolean toggle = true;
+
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (addressChoice.getText().isEmpty()) {
@@ -973,6 +978,7 @@ public class Payment extends JPanel {
                     return;
                 } else {
                     paymentTransactionComplete();
+                    System.out.println("Fill up succesfull");
                 }
                 toggle = !toggle;
             }
@@ -1052,35 +1058,43 @@ public class Payment extends JPanel {
     }
 
     public void paymentTransactionComplete() {
-        notice.setVisible(false);
-        String recieverName = home.checkout.firstname.getText() + " " + home.checkout.initial.getText() + " " + home.checkout.lastname.getText();
-        String retrievePrice = amount.getText();
-        String retrieveAddress = addressChoice.getText();
-        System.out.println(payBtn.getText());
-        home.cpPane.add(home.cps);
-        home.cpPane.setVisible(true);
-        home.cpPane.setComponentZOrder(home.cps, 0);
-        home.getContentPane().setComponentZOrder(home.cpPane, 0);
-        home.paymentPane.setVisible(false);
-        home.checkout.setVisible(false);
-        home.cartPane.setVisible(false);
-        home.cps.totalAmount.setText(retrievePrice);
-        home.cps.recieverName.setText(recieverName);
-        home.cps.streetDetails.setText(retrieveAddress);
-        home.cps.setVisible(true);
-        home.cpPane.add(home.cps);
-        home.contentPane.setComponentZOrder(home.cpPane, 0);
-        System.out.println(home.checkout.firstname.getText() + " " + home.checkout.initial.getText() + " "
-                + home.checkout.lastname.getText());
-        home.cpPane.repaint();
-        home.cpPane.revalidate();
-        repaint();
-        revalidate();
-        reset();
+        try {
+            notice.setVisible(false);
+            String recieverName = home.checkout.firstname.getText() + " " + home.checkout.initial.getText() + " "
+                    + home.checkout.lastname.getText();
+            String retrievePrice = amount.getText();
+            String retrieveAddress = addressChoice.getText();
+            System.out.println(payBtn.getText());
+            home.cpPane.add(home.cps);
+            home.cpPane.setVisible(true);
+            home.cpPane.setComponentZOrder(home.cps, 0);
+            home.getContentPane().setComponentZOrder(home.cpPane, 0);
+            home.paymentPane.setVisible(false);
+            home.checkout.setVisible(false);
+            home.cartPane.setVisible(false);
+            home.cps.totalAmount.setText(retrievePrice);
+            home.cps.recieverName.setText(recieverName);
+            home.cps.streetDetails.setText(retrieveAddress);
+            home.cps.setVisible(true);
+            home.cpPane.add(home.cps);
+            home.contentPane.setComponentZOrder(home.cpPane, 0);
+            System.out.println(home.checkout.firstname.getText() + " " + home.checkout.initial.getText() + " "
+                    + home.checkout.lastname.getText());
+            home.cpPane.repaint();
+            home.cpPane.revalidate();
+            System.out.println("Payment transaction successfull!");
+            repaint();
+            revalidate();
+            reset();
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Payment transaction failed!");
+        }
     }
 
     private void paymentCashOnDelivery() {
-        home.cps.modeOfPayment.setText("Cash on Delivery");
+        try {
+            home.cps.modeOfPayment.setText("Cash on Delivery");
         cashOnDelivery.setFont(new Font("Montserrat", Font.BOLD, 13));
         creditCard.setFont(new Font("Montserrat", Font.PLAIN, 13));
         debitCard.setFont(new Font("Montserrat", Font.PLAIN, 13));
@@ -1097,10 +1111,16 @@ public class Payment extends JPanel {
         username.setText("");
         passwordPin.setText("");
         accessCode.setText("");
+        System.out.println("Your payment method is Cash on Delivery");
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Failed to choose Cash on Delivery for your payment method");
+        }
     }
 
     private void paymentCreditCard() {
-        home.cps.modeOfPayment.setText("Credit Card");
+        try {
+            home.cps.modeOfPayment.setText("Credit Card");
         cashOnDelivery.setFont(new Font("Montserrat", Font.PLAIN, 13));
         creditCard.setFont(new Font("Montserrat", Font.BOLD, 13));
         debitCard.setFont(new Font("Montserrat", Font.PLAIN, 13));
@@ -1120,10 +1140,16 @@ public class Payment extends JPanel {
         username.setText("");
         passwordPin.setText("");
         accessCode.setText("");
+        System.out.println("Your payment method is Credit Card");
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Failed to choose Credit Card for your payment method");
+        }
     }
 
     private void paymentDebitCard() {
-        home.cps.modeOfPayment.setText("Debit Card");
+        try {
+            home.cps.modeOfPayment.setText("Debit Card");
         cashOnDelivery.setFont(new Font("Montserrat", Font.PLAIN, 13));
         creditCard.setFont(new Font("Montserrat", Font.PLAIN, 13));
         debitCard.setFont(new Font("Montserrat", Font.BOLD, 13));
@@ -1143,10 +1169,16 @@ public class Payment extends JPanel {
         username.setText("");
         passwordPin.setText("");
         accessCode.setText("");
+        System.out.println("Your payment method is Debit Card");
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Failed to choose Debit Card for your payment method");
+        }
     }
 
     private void paymentDigitalWallet() {
-        home.cps.modeOfPayment.setText("Digital Wallet");
+        try {
+            home.cps.modeOfPayment.setText("Digital Wallet");
         cashOnDelivery.setFont(new Font("Montserrat", Font.PLAIN, 13));
         creditCard.setFont(new Font("Montserrat", Font.PLAIN, 13));
         debitCard.setFont(new Font("Montserrat", Font.PLAIN, 13));
@@ -1163,5 +1195,10 @@ public class Payment extends JPanel {
         cvv.setText("");
         cardHolder.setText("");
         cardNumber.setText("");
+        System.out.println("Your payment method is Digital Wallet");
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Failed to choose Digital Wallet for your payment method");
+        }
     }
 }
