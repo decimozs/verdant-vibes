@@ -64,7 +64,6 @@ public class PlantDescriptionCard extends JPanel {
 			public void mouseClicked(MouseEvent e) {
 				home.plantDescriptionPane.setVisible(false);
 				home.pdc.setVisible(false);
-				System.out.println("Close na bai");
 				repaint();
 				revalidate();
 			}
