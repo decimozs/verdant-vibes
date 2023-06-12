@@ -1555,7 +1555,6 @@ public class Home extends JFrame {
 	}
 
 	private void togglePlantDescriptionPane() {
-		System.out.println("Nice bai!");
 		plantDescriptionPane.add(pdc);
 		contentPane.setComponentZOrder(plantDescriptionPane, 0);
 		plantDescriptionPane.setComponentZOrder(pdc, 0);
@@ -1576,7 +1575,6 @@ public class Home extends JFrame {
 	}
 
 	private void toggleCartPane() {
-		System.out.println("Nice bai!");
 		cartPane.add(shoppingCart);
 		contentPane.setComponentZOrder(cartPane, 0);
 		cartPane.setComponentZOrder(shoppingCart, 0);

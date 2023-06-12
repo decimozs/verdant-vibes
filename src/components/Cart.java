@@ -308,7 +308,6 @@ public class Cart extends JPanel {
 		home.cartPane.setVisible(false);
 		home.paymentPane.setVisible(true);
 		home.checkout.setVisible(true);
-		System.out.println("Nice bai");
 		System.out.println("Total price is :" + home.table.calculateTotalSum());
 		repaint();
 		revalidate();

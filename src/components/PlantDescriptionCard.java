@@ -205,7 +205,6 @@ public class PlantDescriptionCard extends JPanel {
 	}
 
 	private void proceedToCart() {
-		System.out.println("Nice bai!");
 		home.cartPane.add(home.shoppingCart);
 		home.contentPane.setComponentZOrder(home.cartPane, 0);
 		home.cartPane.setComponentZOrder(home.shoppingCart, 0);
