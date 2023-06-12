@@ -9,7 +9,7 @@ public class Main {
 				System.out.print("The system is running!");
 			} catch (Exception err) {
 				err.printStackTrace();
-				System.out.println("The system failed to run!");
+				System.out.println("The system failed to execute!");
 			}
 		});
 	}
