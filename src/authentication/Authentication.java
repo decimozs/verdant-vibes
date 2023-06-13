@@ -92,7 +92,6 @@ public class Authentication {
 	    return "Days: " + input;
 	}
 
-
 	public String months(String input) {
 	    if (input == null || input.isEmpty()) {
 	        System.out.println("Please enter the month!");
@@ -219,6 +218,4 @@ public class Authentication {
 	    long randomNumber = random.nextLong() % (max - min + 1) + min;
 	    return Math.abs(randomNumber);
 	}
-
-
 }
