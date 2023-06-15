@@ -1,7 +1,7 @@
 import javax.swing.SwingUtilities;
 import forms.LoginForm;
 
-public class Main {
+public class Main { 
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(() -> {
 			try {
