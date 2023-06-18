@@ -1,1 +1,1 @@
-![loaderMask (1)](https://github.com/decimoDev/case-study-verdant-vibes/assets/106976520/c7f4e6b4-e7ac-4878-aa2f-2f3aecfdd778)
+![loaderMask (2)](https://github.com/decimoDev/case-study-verdant-vibes/assets/106976520/79f79628-973e-4fad-b485-51cae40779b0)
